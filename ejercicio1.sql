@@ -3,7 +3,7 @@
 
         USE pizzeria;
 
-        
+        START TRANSACTION;
         CREATE TABLE IF NOT EXISTS ingredient (
             id BINARY(16) PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
@@ -27,7 +27,10 @@
             url VARCHAR(255) NOT NULL
         );
 
-      
+        COMMIT;
+
+
+        START TRANSACTION;
         CREATE TABLE IF NOT EXISTS comment (
             id BINARY(16) PRIMARY KEY,
             text TEXT NOT NULL,
@@ -42,6 +45,10 @@
         
         CREATE INDEX IX_user_comment ON comment(id_user);
         CREATE INDEX IX_pizza_comment ON comment(id_pizza);
+
+        COMMIT;
+
+        START TRANSACTION;
         CREATE TABLE IF NOT EXISTS pizza_ingredient (
             id BINARY(16) PRIMARY KEY,
             id_pizza BINARY(16) NOT NULL,
@@ -55,3 +62,5 @@
 
         CREATE INDEX IX_pizza_pizza_ingredient ON pizza_ingredient(id_pizza);
         CREATE INDEX IX_ingredient_pizza_ingredient ON pizza_ingredient(id_ingredient);
+
+        COMMIT;
